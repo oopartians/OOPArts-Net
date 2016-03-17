@@ -50,3 +50,7 @@ $ npm install
 ``` bash
 $ DEBUG=OOPArts-Net:* npm start
 ```
+
+## Visual Studio Community 로 개발 환경 세팅 : 
+과정이 조금 복잡하므로 구글 Document 링크 참조
+https://docs.google.com/document/d/1E_9EijU8eqpjOcf6gz6aVAZk7_PD38nPSVhCABIFYsE/edit?usp=sharing
