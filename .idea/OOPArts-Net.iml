@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="OOPArts-Net node_modules" level="project" />
+    <orderEntry type="library" name="node_modules" level="project" />
   </component>
 </module>
