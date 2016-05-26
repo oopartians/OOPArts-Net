@@ -20,6 +20,8 @@ router.post('/', function (req, res, next) {
 
 /* READ User all or search */
 router.get('/', function(req, res, next) {
+  /* TODO: check request data validation
+     and, check if query is valid search param key field */
   User.findAll({
     where: req.query,
     attributes: ['userId', 'name', 'image', 'exp', 'grade', 'status']
@@ -55,6 +57,24 @@ router.get('/:userId', function(req, res, next) {
       res.status(404).json({
         message: 'not found'
       });
+  });
+});
+
+/* UPDATE User one */
+router.put('/:userId', function(req, res, next) {
+  /* TODO: check request data validation
+   and, check if query is valid update param key field */
+  User.update(
+    req.body,
+    {
+      where: {
+        userId: req.params.userId
+      }
+    }
+  ).then(function () {
+    res.status(200).json({message: 'success'});
+  }).catch(function (error) {
+    res.status(400).json({message: error});
   });
 });
 
