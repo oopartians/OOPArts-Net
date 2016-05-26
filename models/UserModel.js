@@ -11,7 +11,8 @@ var User = sequelize.define('user', {
   exp: Sequelize.BIGINT,
   status: {
     type: Sequelize.ENUM,
-    values: ['active', 'inactive', 'pending', 'dropped']
+    values: ['active', 'inactive', 'pending', 'dropped'],
+    defaultValue: 'pending'
   }
 }, {
   freezeTableName: true // Model tableName will be the same as the model name
