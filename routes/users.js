@@ -18,6 +18,22 @@ router.post('/', function (req, res, next) {
   });
 });
 
+/* READ User all */
+router.get('/', function(req, res, next) {
+  User.findAll({
+    attributes: ['userId', 'name', 'image', 'exp', 'grade', 'status']
+  }).then(function (users) {
+    if (users != null)
+      res.status(200).json({
+        Users: users
+      });
+    else
+      res.status(400).json({
+        message: 'error'
+      });
+  });
+});
+
 /* READ User one */
 router.get('/:userId', function(req, res, next) {
   User.findOne({
