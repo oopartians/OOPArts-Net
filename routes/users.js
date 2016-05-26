@@ -69,7 +69,28 @@ router.put('/:userId', function(req, res, next) {
     {
       where: {
         userId: req.params.userId
-      }
+      },
+      limit: 1
+    }
+  ).then(function () {
+    res.status(200).json({message: 'success'});
+  }).catch(function (error) {
+    res.status(400).json({message: error});
+  });
+});
+
+/* UPDATE User one */
+router.delete('/:userId', function(req, res, next) {
+  /* TODO: check request data validation */
+  User.update(
+    {
+      status: 'dropped'
+    },
+    {
+      where: {
+        userId: req.params.userId
+      },
+      limit: 1
     }
   ).then(function () {
     res.status(200).json({message: 'success'});
