@@ -2,7 +2,23 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/UserModel');
 
-/* GET users listing. */
+/* CREATE User */
+router.post('/', function (req, res, next) {
+  // TODO: check request data validation
+  var user = User.build({
+    userId: req.body.userId,
+    password: req.body.password,
+    grade: req.body.grade,
+    name: req.body.name
+  });
+  user.save().then(function () {
+    res.status(200).json({message: 'success'});
+  }).catch(function (error) {
+    res.status(400).json({message: error});
+  });
+});
+
+/* READ User one */
 router.get('/:userId', function(req, res, next) {
   User.findOne({
     where: {
@@ -20,7 +36,7 @@ router.get('/:userId', function(req, res, next) {
       });
     else
       res.status(404).json({
-        message: 'not found user'
+        message: 'not found'
       });
   });
 });
