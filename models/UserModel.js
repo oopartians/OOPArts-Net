@@ -2,13 +2,13 @@ var Sequelize = require('sequelize');
 var sequelize = require('../config/develop');
 
 var User = sequelize.define('user', {
-  userId: {type: Sequelize.STRING, unique: true},
+  userKey: { type: Sequelize.INTEGER, autoIncrement: true , primaryKey: true},
+  userId: { type: Sequelize.STRING, unique: true, primaryKey: true },
   password: Sequelize.STRING,
-  exp: Sequelize.BIGINT,
+  name: Sequelize.STRING,
   image: Sequelize.STRING,
   grade: Sequelize.INTEGER,
-  name: Sequelize.STRING,
-  userKey: { type: Sequelize.INTEGER, autoIncrement: true },
+  exp: Sequelize.BIGINT,
   status: {
     type: Sequelize.ENUM,
     values: ['active', 'inactive', 'pending', 'dropped']
@@ -19,13 +19,13 @@ var User = sequelize.define('user', {
 
 User.sync({force: true}).then(function () {
   return User.create({
+    userKey: 1,
     userId: 'user1',
     password: 'password',
-    exp: 10000,
+    name: 'GyeongMo',
     image: 'asdf.png',
     grade: 12,
-    name: 'GyeongMo',
-    userKey: 'asdf',
+    exp: 10000,
     status: 'active'
   });
 });
