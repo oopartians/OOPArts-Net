@@ -18,9 +18,10 @@ router.post('/', function (req, res, next) {
   });
 });
 
-/* READ User all */
+/* READ User all or search */
 router.get('/', function(req, res, next) {
   User.findAll({
+    where: req.query,
     attributes: ['userId', 'name', 'image', 'exp', 'grade', 'status']
   }).then(function (users) {
     if (users != null)
