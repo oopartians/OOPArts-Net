@@ -60,7 +60,7 @@ router.get('/:userId', function(req, res, next) {
   });
 });
 
-/* UPDATE User one */
+/* UPDATE User */
 router.put('/:userId', function(req, res, next) {
   /* TODO: check request data validation
    and, check if query is valid update param key field */
@@ -79,7 +79,7 @@ router.put('/:userId', function(req, res, next) {
   });
 });
 
-/* UPDATE User one */
+/* DELETE User */
 router.delete('/:userId', function(req, res, next) {
   /* TODO: check request data validation */
   User.update(
