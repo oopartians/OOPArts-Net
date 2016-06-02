@@ -1,14 +1,16 @@
 var Sequelize = require('sequelize');
 var sequelize = require('../config/develop');
+var user = require('./UserModel');
 
 var Posting = sequelize.define('posting', {
     postingKey: {
         type         : Sequelize.INTEGER,
         autoIncrement: true,
-        unique       : true
+        unique       : true,
+        primaryKey   : true
     },
     title    : Sequelize.STRING,
-    createdAt: Sequelize.DATETIME,
+    createdAt: Sequelize.DATE,
     content  : Sequelize.STRING,
     view     : Sequelize.INTEGER,
     star     : Sequelize.INTEGER,

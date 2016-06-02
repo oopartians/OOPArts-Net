@@ -86,10 +86,10 @@ router.put('/:postingKey', function(req, res, next) {
 /* DELETE Posting */
 router.delete('/:postingKey', function(req, res, next) {
     /* TODO: check request data validation */
-    Posting.findOne(
+    Posting.destroy({
         where: {
-        postingKey: String(req.params.postingKey)
-    }).then(function (posting) {
+        postingKey: INTEGER(req.params.postingKey)
+    }}).then(function (posting) {
         res.status(200).json({message: 'success'});
     }).catch(function (error) {
         res.status(400).json({message: error});
