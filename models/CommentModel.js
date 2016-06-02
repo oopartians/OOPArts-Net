@@ -14,8 +14,8 @@ var Comment = sequelize.define('comment', {
 }, {
     freezeTableName : true
 });
-Comment.hasOne(Posting, { foreignKey: 'postingKey' });
-Comment.hasOne(User, { foreignKey: 'userKey' });
+Comment.hasOne(Posting, { foreignKey: 'postingKey', constraints:false });
+Comment.hasOne(User, { foreignKey: 'userKey', constraints: false });
 
 Comment.sync({ force: true });
 
