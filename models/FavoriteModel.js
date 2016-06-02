@@ -3,7 +3,7 @@ var sequelize = require('../config/develop');
 var User = require('./UserModel');
 
 var Favorite = sequelize.define('favorite', {
-    favoriteKey: { type: Sequelize.INTEGER, autoIncrement: true },
+    favoriteKey: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
     name: { type: Sequelize.STRING, validate: { notNull: true } }
 }, {
     freezeTableName : true
