@@ -7,10 +7,10 @@ router.post('/', function (req, res, next) {
     // TODO: check request data validation
     var posting = Posting.build({
         title: req.body.title,
-        content: req.body.password,
-        tag: req.body.tag
+        content: req.body.
+        //tag: req.body.tag
     });
-    user.save().then(function () {
+    posting.save().then(function () {
         res.status(200).json({message: 'success'});
     }).catch(function (error) {
         res.status(400).json({message: error});
@@ -18,25 +18,88 @@ router.post('/', function (req, res, next) {
 });
 
 /* READ Posting one */
-router.get('/:userId', function(req, res, next) {
-    User.findOne({
+router.get('/:postingKey', function(req, res, next) {
+    Posting.findOne({
         where: {
-            userId: String(req.params.userId)
-        }}).then(function (user) {
-        if (user != null)
+            postingKey: String(req.params.postingKey)
+        }}).then(function (posting) {
+        if (posting != null)
             res.status(200).json({
-                userId: user.userId,
-                exp: user.exp,
-                image: user.image,
-                grade: user.grade,
-                name: user.name,
-                userKey: user.userKey,
-                status: user.status
+                postingKey: posting.postingKey,
+                title     : posting.title,
+                createdAt : posting.createdAt,
+                content   : posting.content,
+                view      : posting.view,
+                star      : posting.star,
+                userKey   : posting.userKey
             });
         else
             res.status(404).json({
                 message: 'not found'
             });
+    });
+});
+
+/* READ Posting search */
+router.get('/', function(req, res, next) {
+
+    Posting.findAll({
+        where: req.query,
+        attributes: ['userId', 'name', 'title', 'tag']
+    }).then(function (posting) {
+        if (posting != null)
+            res.status(200).json({
+                postingKey: posting.postingKey,
+                title     : posting.title,
+                createdAt : posting.createdAt,
+                content   : posting.content,
+                view      : posting.view,
+                star      : posting.star,
+                userKey   : posting.userKey
+            });
+        else
+            res.status(404).json({
+                message: 'not found'
+            });
+    });
+});
+
+/* UPDATE User */
+router.put('/:postingKey', function(req, res, next) {
+    /* TODO: check request data validation
+     and, check if query is valid update param key field */
+    User.update(
+        req.body,
+        {
+            where: {
+                userId: req.params.userId
+            },
+            limit: 1
+        }
+    ).then(function () {
+        res.status(200).json({message: 'success'});
+    }).catch(function (error) {
+        res.status(400).json({message: error});
+    });
+});
+
+/* DELETE User */
+router.delete('/:postingKey', function(req, res, next) {
+    /* TODO: check request data validation */
+    User.update(
+        {
+            status: 'dropped'
+        },
+        {
+            where: {
+                userId: req.params.userId
+            },
+            limit: 1
+        }
+    ).then(function () {
+        res.status(200).json({message: 'success'});
+    }).catch(function (error) {
+        res.status(400).json({message: error});
     });
 });
 
