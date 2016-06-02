@@ -2,7 +2,7 @@ var Sequelize = require('sequelize');
 var sequelize = require('../config/develop');
 
 var Tag = sequelize.define('tag', {
-    tagKey: Sequelize.INTEGER,
+    tagKey: {type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true},
     name: Sequelize.STRING,
     role: {
         type: Sequelize.ENUM,
@@ -12,12 +12,6 @@ var Tag = sequelize.define('tag', {
     freezeTableName: true // Model tableName will be the same as the model name
 });
 
-Tag.sync({force: true}).then(function () {
-    return Tag.create({
-        tagKey: '1',
-        name: 'pracTag',
-        role: 'parent'
-    });
-});
+Tag.sync({force: true});
 
 module.exports = Tag;
