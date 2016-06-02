@@ -9,9 +9,13 @@ router.post('/', function (req, res, next) {
         name: req.body.name
     });
     tag.save().then(function () {
-        res.status(200).json({message: 'success'});
+        res.status(200).json({
+            message: 'success'
+        });
     }).catch(function (error) {
-        res.status(400).json({message: error});
+        res.status(400).json({
+            message: 'error'
+        });
     });
 });
 
@@ -28,9 +32,16 @@ router.delete('/', function (req, res, next) {
 /* Search All Tag */
 router.get('/', function(req, res, next) {{
     Tag.findAll({
-        where:
+        attribute: ['name']
     }).then(function (tag) {
-
+        if(tag != null)
+            res.status(200).json({
+                Tags: tag
+            });
+        else
+            res.status(400).json({
+                message: 'error'
+            })
     });
 }})
 
@@ -43,7 +54,7 @@ router.get('/:name', function (req, res, next) {
         }
     }).then(function (tag) {
         if (tag != null)
-            req.status(200).json({
+            res.status(200).json({
                 name: tag.name,
                 role: tag.role
             });
