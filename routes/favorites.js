@@ -147,6 +147,7 @@ var Tag = require('../models/TagModel');
             for(i = 0; i < favoriteList.length; i++){
                 temp = {
                     name : favoriteList[i].name,
+                    favoriteKey : favoriteList[i].favoriteKey,
                     tags : findTagsOfKey(favoriteList[i].favoriteKey)
                 };
                 favorites.push(temp);
@@ -160,7 +161,7 @@ var Tag = require('../models/TagModel');
     });
 
     router.put('/', function (req, res, next) {
-        var favoriteName = req.body.name;
+        var favoriteKey = req.body.favoriteKey;
         var userID = req.body.userID;
         var userKey = findUserKey(userID);
         var new_name = req.body.new_name;
@@ -171,7 +172,7 @@ var Tag = require('../models/TagModel');
             },
             {
                 where: {
-                    name: String(favoriteName),
+                    favoriteKey: favoriteKey,
                     userKey : userKey
                 },
                 limit: 1
@@ -184,14 +185,14 @@ var Tag = require('../models/TagModel');
     });
 
     router.delete('/', function(req, res, next) {
-        var favoriteName = req.body.name;
+        var favoriteKey = req.body.favoriteKey;
         var userID = req.body.userID;
         var userKey = findUserKey(userID);
 
         Favorite.findOne({
             where: {
                 userKey: userKey,
-                favoriteName: favoriteName
+                favoriteKey: favoriteKey
             }
         }).then(function (favorite) {
             if (favorite != null){
