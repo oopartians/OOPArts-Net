@@ -46,6 +46,20 @@ var Tag = require('../models/TagModel');
         });
     }
 
+    function findFavoriteKey(userKey, favoriteName) {
+        Favorite.findOne({
+            where: {
+                userKey: String(userKey),
+                name : String(favoriteName)
+            }
+        }).then(function (favorite) {
+            if (favorite != null)
+                return favorite.favoriteKey;
+            else
+                return null;
+        });
+    }
+
     function findTagsOfKey(favoriteKey){
         var i = 0;
         var tags = [];
@@ -70,9 +84,9 @@ var Tag = require('../models/TagModel');
     }
 
     router.post('/', function (req, res, next) {
-        var tagName = req.body.name;
-        var tags = req.body.tags;
-        var userID = req.body.userId;
+        var favoriteName = req.body.name;   // 즐찾 이름
+        var tags = req.body.tags;           // [ 태그명 ]
+        var userID = req.body.userId;       // 유저 아이디
         var i;
 
         var userKey = findUserKey(userID);
@@ -94,21 +108,25 @@ var Tag = require('../models/TagModel');
             }
         }
 
-        var favorite = Favorite.build({
+        // 즐찾 테이블 추가
+        Favorite.build({
             userKey : userKey,
-            name : tagName
-        });
-        favorite.save().then(function () {
+            name : favoriteName
+        }).save().then(function () {
             res.status(200).json({message: 'success'});
         }).catch(function (error) {
             res.status(400).json({message: error});
         });
 
-        var favoriteTag = {};
+        // 즐찾 키 - 태그 키 추가
         for(i = 0; i < tags.length; i++){
-            favoriteTag[i] = FavoriteTag.build({
+            FavoriteTag.build({
                 favoriteKey: favorite.favoriteKey,
                 tagKey: tagKeys[i]
+            }).save(function () {
+                // 즐찾 키 - 태그 키
+            }).catch(function (error) {
+                // 오류
             });
         }
     });
@@ -138,6 +156,54 @@ var Tag = require('../models/TagModel');
                 favorites: favorites
             });
 
+        });
+    });
+
+    router.put('/', function (req, res, next) {
+        var favoriteName = req.body.name;
+        var userID = req.body.userID;
+        var userKey = findUserKey(userID);
+        var new_name = req.body.new_name;
+
+        Favorite.update(
+            {
+                name: new_name
+            },
+            {
+                where: {
+                    name: String(favoriteName),
+                    userKey : userKey
+                },
+                limit: 1
+            }
+        ).then(function () {
+            res.status(200).json({message: 'success'});
+        }).catch(function (error) {
+            res.status(400).json({message: error});
+        });
+    });
+
+    router.delete('/', function(req, res, next) {
+        var favoriteName = req.body.name;
+        var userID = req.body.userID;
+        var userKey = findUserKey(userID);
+
+        Favorite.findOne({
+            where: {
+                userKey: userKey,
+                favoriteName: favoriteName
+            }
+        }).then(function (favorite) {
+            if (favorite != null){
+                favorite.destroy().then(function () {
+                    res.status(200).json({message: 'success'});
+                }).catch(function (error) {
+                    res.status(400).json({message: error});
+                });
+            }
+            else{
+                res.status(400).json({message: 'favorite not found which have name of '+favoriteName});
+            }
         });
     });
 
