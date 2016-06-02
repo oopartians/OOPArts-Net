@@ -4,7 +4,7 @@ var User = require('./UserModel');
 var Posting = require('./PostingModel');
 
 var Comment = sequelize.define('comment', {
-    commentKey: { type: Sequelize.INTEGER, autoIncrement: true },
+    commentKey: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
     createdAt: Sequelize.DATE,
     comment: Sequelize.STRING,
     status: {
