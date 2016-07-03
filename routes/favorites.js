@@ -63,7 +63,6 @@ var Tag = require('../models/TagModel');
     function findTagsOfKey(favoriteKey, callback){
         var i = 0;
         var tags = [];
-        var temp;
         FavoriteTag.findAll({
             where:{
                 favoriteKey : favoriteKey
@@ -71,12 +70,16 @@ var Tag = require('../models/TagModel');
         }).then(function (favoriteTagList) {
             if(favoriteTagList != null){
                 for(i = 0; i < favoriteTagList.length; i++){
-                    temp = findTagName(favoriteTagList[i].tagKey);
-                    if(temp == null)
-                        continue;
-                    tags.push(temp);
+                    (function(index){findTagName(favoriteTagList[i].tagKey, function (temp) {
+                        if(temp == null)
+                            continue;
+                        tags.push(temp);
+
+                        if(index == favoriteTagList.length - 1){
+                            callback(tags);
+                        }
+                    })})(i);
                 }
-                callback(tags);
             }else{
                 callback(null);
             }
