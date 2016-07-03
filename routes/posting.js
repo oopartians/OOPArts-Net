@@ -44,7 +44,7 @@ router.get('/:postingKey', function(req, res, next) {
 /* READ Posting search */
 router.get('/', function(req, res, next) {
     Posting.findAll({
-        where: req.query,
+        //where: req.query,
         attributes: ['userId', 'name', 'title']//, 'tag']
     }).then(function (posting) {
         if (posting != null)
