@@ -8,7 +8,8 @@ var Favorite = sequelize.define('favorite', {
 }, {
     freezeTableName : true
 });
-Favorite.hasOne(User, { foreignKey: 'userKey' });
+
+Favorite.hasOne(User, { foreignKey: 'userKey', constraints : false });
 
 Favorite.sync({ force: true });
 
