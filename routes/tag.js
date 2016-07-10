@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Tag = require('../models/TagModel');
+var HierarchyTag = require('../models/HierarchyTagModel')
 
 /* CREATE Tag*/
 router.post('/', function (req, res, next) {
