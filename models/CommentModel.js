@@ -5,7 +5,6 @@ var Posting = require('./PostingModel');
 
 var Comment = sequelize.define('comment', {
     commentKey: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
-    createdAt: Sequelize.DATE,
     comment: Sequelize.STRING,
     status: {
         type: Sequelize.ENUM,
@@ -14,8 +13,12 @@ var Comment = sequelize.define('comment', {
 }, {
     freezeTableName : true
 });
-Comment.hasOne(Posting, { foreignKey: 'postingKey', constraints:false });
-Comment.hasOne(User, { foreignKey: 'userKey', constraints: false });
+
+Posting.hasMany(Comment, { foreignKey: 'postingKey', constraints : false });
+// Comment.belongsTo(Posting, { foreignKey : 'postingKey', targetKey : 'postingKey', constraints : false });
+
+User.hasMany(Comment, { foreignKey: 'userKey', constraints : false });
+// Comment.belongsTo(User, { foreignKey : 'userKey', targetKey : 'userKey', constraints : false });
 
 Comment.sync({ force: true });
 

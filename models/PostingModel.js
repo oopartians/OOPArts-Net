@@ -13,28 +13,13 @@ var Posting = sequelize.define('posting', {
     createdAt: Sequelize.DATE,
     content  : Sequelize.STRING,
     view     : Sequelize.INTEGER,
-    star     : Sequelize.INTEGER,
-    userKey  : {
-        type : Sequelize.INTEGER,
-        references: {
-            model: user,
-            key: 'userKey'
-        }
-    }//,
-    // status: {
-    //     type: Sequelize.ENUM,
-    //     values: ['active', 'inactive', 'pending', 'dropped']
-    // }
+    star     : Sequelize.INTEGER
 }, {
     freezeTableName: true // Model tableName will be the same as the model name
 });
 
-Posting.sync({force: true}).then(function () {
-    return Posting.create({
-        title: 'testPosting',
-        content: '완성!'//,
-        //tag:
-    });
-});
+user.hasOne(Posting, { foreignKey : 'userKey', constraints : false });
+
+Posting.sync({force: true});
 
 module.exports = Posting;

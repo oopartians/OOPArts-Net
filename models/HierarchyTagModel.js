@@ -6,12 +6,11 @@ var sequelize = require('../config/develop');
 var Tag = require('./TagModel');
 
 var HierarchyTag = sequelize.define('hierarchytag', {
+    parentKey: {type: Sequelize.INTEGER, validate: { notNull: true }},
+    childKey: {type: Sequelize.INTEGER, validate: { notNull: true }}
 }, {
     freezeTableName : true
 });
-
-HierarchyTag.hasOne(Tag, { as: 'parentKey', foreignKey: 'tagKey', constraints : false });
-HierarchyTag.hasOne(Tag, { as: 'childKey', foreignKey: 'tagKey', constraints : false });
 
 HierarchyTag.sync({ force: true });
 
