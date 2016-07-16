@@ -3,7 +3,7 @@ var sequelize = require('../config/develop');
 var Tag = require('./TagModel');
 var Favorite = require('./FavoriteModel');
 
-var FavoriteTag = sequelize.define('favorite-tag', {
+var FavoriteTag = sequelize.define('favoriteTag', {
 }, {
     freezeTableName : true
 });
