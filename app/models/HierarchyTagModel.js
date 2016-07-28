@@ -3,7 +3,8 @@ module.exports = function(sequelize, DataTypes) {
         parentKey: { type: DataTypes.INTEGER, validate: { notNull: true } },
         childKey: { type: DataTypes.INTEGER, validate: { notNull: true } }
     }, {
-        tableName: 'hierarchytag'
+        tableName: 'hierarchytag',
+        freezeTableName: true
     });
 
     return HierarchyTag;

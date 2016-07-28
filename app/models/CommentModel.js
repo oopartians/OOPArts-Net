@@ -4,7 +4,8 @@ module.exports = function(sequelize, DataTypes) {
         comment: DataTypes.STRING,
         status: { type: DataTypes.ENUM, values: ['normal', 'dropped'] }
     }, {
-        tableName: 'comment'
+        tableName: 'comment',
+        freezeTableName: true
     });
 
     return Comment;

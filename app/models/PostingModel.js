@@ -7,6 +7,7 @@ module.exports = function(sequelize, DataTypes) {
         star: DataTypes.INTEGER
     }, {
         tableName: 'posting',
+        freezeTableName: true,
         classMethod: {
             associate: function(models) {
                 Posting.hasMany(models.postingtag, { foreignKey: 'postingKey' });

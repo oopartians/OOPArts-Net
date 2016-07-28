@@ -4,6 +4,7 @@ module.exports = function(sequelize, DataTypes) {
         //tagKey: { type: DataTypes.INTEGER, references: { model: 'tag', key: 'tagKey' } }
     }, {
         tablesName: 'postingtag',
+        freezeTableName: true
         //classMethods: {
           //  associate: function(models) {
             //    PostingTag.belongsTo(models.posting, { foreignKey: 'postingKey', targetKey: 'postingKey' });

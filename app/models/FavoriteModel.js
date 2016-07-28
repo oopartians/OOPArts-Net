@@ -5,6 +5,7 @@ module.exports = function(sequelize, DataTypes) {
         //userKey: { type: DataTypes.INTEGER, references: { model: 'user', key: 'userKey' } }
     }, {
         tableName: 'favorite',
+        freezeTableName: true,
         classMethods: {
             associate: function(models) {
                 Favorite.hasMany(models.favoritetag, { foreignKey: 'favoriteKey' });

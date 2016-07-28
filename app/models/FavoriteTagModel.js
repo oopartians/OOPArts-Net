@@ -4,6 +4,7 @@ module.exports = function(sequelize, DataTypes) {
         //tagKey: { type: DataTypes.INTEGER, references: { model: 'tag', key: 'tagKey' } }
     }, {
         tableName: 'favoritetag',
+        freezeTableName: true
         //classMethods: {
           //  associate: function(models) {
             //    FavoriteTag.belongsTo(models.favorite, { foreignKey: 'favoriteKey', targetKey: 'favoriteKey' });

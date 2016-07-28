@@ -10,6 +10,7 @@ module.exports = function(sequelize, DataTypes) {
         status: { type: DataTypes.ENUM, values: ['active', 'inactive', 'pending', 'dropped'], defaultValue: 'pending' }
     }, {
         tableName: 'user',
+        freezeTableName: true,
         classMethods: {
             associate: function(models) {
                 User.hasMany(models.favorite, { foreignKey: 'userKey' });

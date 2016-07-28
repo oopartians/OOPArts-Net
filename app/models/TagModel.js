@@ -5,6 +5,7 @@ module.exports = function(sequelize, DataTypes) {
         role: { type: DataTypes.ENUM, values: ['parent', 'child'] }
     }, {
         tableName: 'tag',
+        freezeTableName: true,
         classMethods: {
             associate: function(models) {
                 Tag.hasMany(models.favoritetag, { foreignKey: 'tagKey' });
