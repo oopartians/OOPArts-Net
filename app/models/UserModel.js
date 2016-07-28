@@ -1,7 +1,7 @@
 module.exports = function(sequelize, DataTypes) {
-    var User = sequelize.define('user', {
+    var User = sequelize.define('User', {
         userKey: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-        userId: { type: DataTypes.STRING, unique: true, primaryKey: true },
+        userId: { type: DataTypes.STRING, unique: true }, // , primaryKey: true
         password: DataTypes.STRING,
         name: DataTypes.STRING,
         image: DataTypes.STRING,
@@ -9,16 +9,15 @@ module.exports = function(sequelize, DataTypes) {
         exp: DataTypes.BIGINT,
         status: { type: DataTypes.ENUM, values: ['active', 'inactive', 'pending', 'dropped'], defaultValue: 'pending' }
     }, {
-        tableName: 'user',
         freezeTableName: true,
         classMethods: {
             associate: function(models) {
-                User.hasMany(models.favorite, { foreignKey: 'userKey' });
-                User.hasMany(models.posting, { foreignKey: 'userKey' });
-                User.hasMany(models.comment, { foreignKey: 'userKey' });
+                User.hasMany(models.Comment, { foreignKey: 'userKey' });
+                User.hasMany(models.Favorite, { foreignKey: 'userKey' });
+                User.hasMany(models.Posting, { foreignKey: 'userKey' });
             }
         }
     });
 
     return User;
-}
+};

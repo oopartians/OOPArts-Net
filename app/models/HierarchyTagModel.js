@@ -1,11 +1,10 @@
 module.exports = function(sequelize, DataTypes) {
-    var HierarchyTag = sequelize.define('hierarchytag', {
+    var HierarchyTag = sequelize.define('HierarchyTag', {
         parentKey: { type: DataTypes.INTEGER, validate: { notNull: true } },
         childKey: { type: DataTypes.INTEGER, validate: { notNull: true } }
     }, {
-        tableName: 'hierarchytag',
         freezeTableName: true
     });
 
     return HierarchyTag;
-}
+};

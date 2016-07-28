@@ -1,8 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
-    var PostingTag = sequelize.define('postingtag', {}, {
-        tablesName: 'postingtag',
+    var PostingTag = sequelize.define('PostingTag', {}, {
         freezeTableName: true
     });
-
     return PostingTag;
-}
+};

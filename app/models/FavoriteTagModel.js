@@ -1,8 +1,7 @@
 module.exports = function(sequelize, DataTypes) {
-    var FavoriteTag = sequelize.define('favoritetag', {}, {
-        tableName: 'favoritetag',
+    var FavoriteTag = sequelize.define('FavoriteTag', {}, {
         freezeTableName: true
     });
 
     return FavoriteTag;
-}
+};
