@@ -1,12 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var Posting = require('../models/PostingModel');
-var Tag = require('../models/TagModel');
-var PostingTag = require('../models/PostingTagModel')
+var models = require('../models');
 
 /* callback functions */
 function findTagKey(tagName, callback) {
-    Tag.findOne({
+    models.Tag.findOne({
         where: {
             name: String(tagName)
         }
@@ -21,7 +19,7 @@ function findTagKey(tagName, callback) {
 function findOrCreateTagKeys(tagName, callback) {
     var tagkeys = {};
     for (var i = 0; i < tagName.length; i++) {
-        Tag.findOrCreate({
+        models.Tag.findOrCreate({
             where: {
                 name: String(tagName[i]),
                 role: 'child'
@@ -35,7 +33,7 @@ function findOrCreateTagKeys(tagName, callback) {
 }
 
 function findUserKey(userID, callback) {
-    User.findOne({
+    models.User.findOne({
         where: {
             userId: String(userID)
         }
@@ -51,7 +49,7 @@ function findUserKey(userID, callback) {
 /* CREATE Posting */
 router.post('/', function (req, res, next) {
     // TODO: link posting with tags
-    var posting = Posting.build({
+    var posting = models.Posting.build({
         title: req.body.title,
         content: req.body.content
     });
@@ -59,13 +57,13 @@ router.post('/', function (req, res, next) {
     findOrCreateTagKeys(req.body.tags, function (tagkeys) {
         if (tagkeys.length > 0) {
             for (var i = 0; i < tagkeys.length; i++) {
-                PostingTag.build({
+                models.PostingTag.build({
                     postingKey: posting.postingKey,
                     tagKey: tagKeys[i]
                 }).save();
             }
         }
-    })
+    });
 
     posting.save().then(function () {
         res.status(200).json({message: 'success'});
@@ -76,7 +74,7 @@ router.post('/', function (req, res, next) {
 
 /* READ Posting one */
 router.get('/:postingKey', function(req, res, next) {
-    Posting.findOne({
+    models.Posting.findOne({
         where: {
             postingKey: String(req.params.postingKey)
         }}).then(function (posting) {
@@ -90,7 +88,7 @@ router.get('/:postingKey', function(req, res, next) {
                 star      : posting.star,
                 userKey   : posting.userKey
             });
-            PostingTag.findOne({ where: {
+            models.PostingTag.findOne({ where: {
                 postingKey: String(req.params.postingKey) } })
         }
         else
@@ -128,7 +126,7 @@ router.get('/', function(req, res, next) {
     for (var i = 0; i < keywords.length; i++)
         keywords[i] = '%' + keywords[i] + '%';
 
-    Posting.findAll({
+    models.Posting.findAll({
         where: [{userKey: uKey},
                 {$or: [{title: { $like: keywords }},
                     {content: { $like: keywords }}] }]
@@ -154,7 +152,7 @@ router.get('/', function(req, res, next) {
 router.put('/:postingKey', function(req, res, next) {
     /* TODO: check request data validation
      and, check if query is valid update param key field */
-    Posting.update(
+    models.Posting.update(
         req.body,
         {
             where: {
@@ -172,7 +170,7 @@ router.put('/:postingKey', function(req, res, next) {
 /* DELETE Posting */
 router.delete('/:postingKey', function(req, res, next) {
     /* TODO: Destroy linked table (if needed) */
-    Posting.destroy({
+    models.Posting.destroy({
         where: {
         postingKey: INTEGER(req.params.postingKey)
     }}).then(function (posting) {
