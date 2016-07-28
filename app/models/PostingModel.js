@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function(sequelize, DataTypes) {
     var Posting = sequelize.define('Posting', {
         postingKey: { type: DataTypes.INTEGER, autoIncrement: true, unique: true, primaryKey: true },

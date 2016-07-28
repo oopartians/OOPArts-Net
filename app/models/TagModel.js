@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function(sequelize, DataTypes) {
     var Tag = sequelize.define('Tag', {
         tagKey: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },

@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function(sequelize, DataTypes) {
     var Comment = sequelize.define('Comment', {
         commentKey: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },

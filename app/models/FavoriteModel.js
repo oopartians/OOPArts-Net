@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function(sequelize, DataTypes) {
     var Favorite = sequelize.define('Favorite', {
         favoriteKey: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
