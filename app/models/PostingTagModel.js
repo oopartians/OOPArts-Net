@@ -1,19 +1,16 @@
-﻿var Sequelize = require('sequelize');
-var sequelize = require('../../config/develop');
-var Tag = require('./TagModel');
-var Posting = require('./PostingModel');
+module.exports = function(sequelize, DataTypes) {
+    var PostingTag = sequelize.define('postingtag', {
+        //postingKey: { type: DataTypes.INTEGER, references: { model: 'posting', key: 'postingKey' } },
+        //tagKey: { type: DataTypes.INTEGER, references: { model: 'tag', key: 'tagKey' } }
+    }, {
+        tablesName: 'postingtag',
+        //classMethods: {
+          //  associate: function(models) {
+            //    PostingTag.belongsTo(models.posting, { foreignKey: 'postingKey', targetKey: 'postingKey' });
+              //  PostingTag.belongsTo(models.tag, { foreignKey: 'tagkey', targetKey: ' tagKey' });
+            //}
+        //}
+    });
 
-var PostingTag = sequelize.define('postingtag', {
-}, {
-    freezeTableName : true
-});
-
-Posting.hasMany(PostingTag, { foreignKey: 'postingKey', constraints : false });
-//PostingTag.belongsTo(Posting, { foreignKey : 'id', constraints : false });
-
-Tag.hasMany(PostingTag, { foreignKey: 'tagKey', constraints : false });
-//PostingTag.belongsTo(Tag, { foreignKey : 'id', constraints : false });
-
-PostingTag.sync({ force: true });
-
-module.exports = PostingTag;
+    return PostingTag;
+}

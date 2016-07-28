@@ -1,23 +1,21 @@
-var Sequelize = require('sequelize');
-var sequelize = require('../../config/develop');
+module.exports = function(sequelize, DataTypes) {
+    var User = sequelize.define('user', {
+        userKey: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+        userId: { type: DataTypes.STRING, unique: true, primaryKey: true },
+        password: DataTypes.STRING,
+        name: DataTypes.STRING,
+        image: DataTypes.STRING,
+        grade: DataTypes.INTEGER,
+        exp: DataTypes.BIGINT,
+        status: { type: DataTypes.ENUM, values: ['active', 'inactive', 'pending', 'dropped'], defaultValue: 'pending' }
+    }, {
+        tableName: 'user',
+        classMethods: {
+            associate: function(models) {
+                User.hasMany(models.favorite, { foreignKey: 'userKey' });
+            }
+        }
+    });
 
-var User = sequelize.define('user', {
-    userKey: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
-    userId: { type: Sequelize.STRING, unique: true, primaryKey: true },
-    password: Sequelize.STRING,
-    name: Sequelize.STRING,
-    image: Sequelize.STRING,
-    grade: Sequelize.INTEGER,
-    exp: Sequelize.BIGINT,
-    status: {
-        type: Sequelize.ENUM,
-        values: ['active', 'inactive', 'pending', 'dropped'],
-        defaultValue: 'pending'
-    }
-}, {
-    freezeTableName: true // Model tableName will be the same as the model name
-});
-
-User.sync({force: true});
-
-module.exports = User;
+    return User;
+}

@@ -1,17 +1,17 @@
-var Sequelize = require('sequelize');
-var sequelize = require('../../config/develop');
+module.exports = function(sequelize, DataTypes) {
+    var Tag = sequelize.define('tag', {
+        tagKey: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+        name: DataTypes.STRING,
+        role: { type: DataTypes.ENUM, values: ['parent', 'child'] }
+    }, {
+        tableName: 'tag',
+        classMethods: {
+            associate: function(models) {
+                Tag.hasMany(models.favoritetag, { foreignKey: 'tagKey' });
+                Tag.hasMany(models.posting, { foreignKey: 'tagKey' });
+            }
+        }
+    });
 
-var Tag = sequelize.define('tag', {
-    tagKey: {type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true},
-    name: Sequelize.STRING,
-    role: {
-        type: Sequelize.ENUM,
-        values: ['parent', 'child']
-    }
-}, {
-    freezeTableName: true // Model tableName will be the same as the model name
-});
-
-Tag.sync({force: true});
-
-module.exports = Tag;
+    return Tag;
+}

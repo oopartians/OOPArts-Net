@@ -1,12 +1,14 @@
+/**
+ * Created by MinHo on 2016-07-27.
+ */
 var express = require('express');
 var router = express.Router();
-var Tag = require('../models/TagModel');
-var HierarchyTag = require('../models/HierarchyTagModel')
+var models = require('../models/index');
 
 /* CREATE Tag*/
 router.post('/', function (req, res, next) {
     // TODO: check request data validation
-    var tag = Tag.build({
+    var tag = models.tag.build({
         name: req.body.name,
         role: req.body.role
     });
@@ -19,8 +21,8 @@ router.post('/', function (req, res, next) {
 
 /* Update Tag Role*/
 router.put('/:tagKey', function(req, res, next) {
-    Tag.update({ role: req.body.new_role }, {
-        where: { tagKey: req.params.tagKey }, limit: 1}
+    models.tag.update({ role: req.body.new_role }, {
+        where: { tagKey: req.params.tagKey }, limit: 1 }
     ).then(function () {
         res.status(200).json({ message: 'success' });
     }).catch(function (error) {
@@ -30,7 +32,7 @@ router.put('/:tagKey', function(req, res, next) {
 
 /* Delete Tag */
 router.delete('/:name', function (req, res, next) {
-    Tag.destroy({
+    models.tag.destroy({
         where: { name: req.params.name }
     }).then(function () {
         res.status(200).json({ message: 'success' });
@@ -41,7 +43,7 @@ router.delete('/:name', function (req, res, next) {
 
 /* Search All Tag */
 router.get('/', function(req, res, next) {{
-    Tag.findAll({
+    models.tag.findAll({
         attribute: ['name']
     }).then(function (tag) {
         if(tag != null)
@@ -54,7 +56,7 @@ router.get('/', function(req, res, next) {{
 
 /* Search One Tag */
 router.get('/:name', function (req, res, next) {
-    Tag.findOne({
+    models.tag.findOne({
         where: { name: String(req.params.name) }
     }).then(function (tag) {
         if (tag != null)

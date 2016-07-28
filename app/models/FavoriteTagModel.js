@@ -1,19 +1,16 @@
-﻿var Sequelize = require('sequelize');
-var sequelize = require('../../config/develop');
-var Tag = require('./TagModel');
-var Favorite = require('./FavoriteModel');
+module.exports = function(sequelize, DataTypes) {
+    var FavoriteTag = sequelize.define('favoritetag', {
+       // favoriteKey: { type: DataTypes.INTEGER, references: { model: 'favorite', key: 'favoriteKey' } },
+        //tagKey: { type: DataTypes.INTEGER, references: { model: 'tag', key: 'tagKey' } }
+    }, {
+        tableName: 'favoritetag',
+        //classMethods: {
+          //  associate: function(models) {
+            //    FavoriteTag.belongsTo(models.favorite, { foreignKey: 'favoriteKey', targetKey: 'favoriteKey' });
+              //  FavoriteTag.belongsTo(models.tag, { foreignKey : 'tagKey', targetKey: 'tagKey' });
+           // }
+       // }
+    });
 
-var FavoriteTag = sequelize.define('favoriteTag', {
-}, {
-    freezeTableName : true
-});
-
-Favorite.hasMany(FavoriteTag, { foreignKey: 'favoriteKey', constraints : false });
-//FavoriteTag.belongsTo(Favorite, { foreignKey : 'favoriteId', constraints : false });
-
-Tag.hasMany(FavoriteTag, { foreignKey: 'tagKey', constraints : false });
-//FavoriteTag.belongsTo(Tag, { foreignKey : 'tagId', constraints : false });
-
-FavoriteTag.sync({ force: true });
-
-module.exports = FavoriteTag;
+    return FavoriteTag;
+}
