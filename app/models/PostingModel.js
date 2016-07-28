@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         tableName: 'posting',
         freezeTableName: true,
-        classMethod: {
+        classMethods: {
         associate: function(models) {
             Posting.hasMany(models.comment, { foreignKey: 'postingKey' });
             Posting.belongsToMany(models.tag, { foreignKey: 'postingKey', through: models.postingtag });
