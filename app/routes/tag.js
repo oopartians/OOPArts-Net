@@ -1,9 +1,6 @@
-/**
- * Created by MinHo on 2016-07-27.
- */
 var express = require('express');
-var router = express.Router();
 var models = require('../models');
+var router = express.Router();
 
 /* CREATE Tag*/
 router.post('/', function (req, res, next) {

@@ -1,6 +1,6 @@
 var express = require('express');
-var router = express.Router();
 var models = require('../models');
+var router = express.Router();
 
 /* CREATE User */
 router.post('/', function (req, res, next) {
