@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../models/UserModel');
+var models = require('../models');
 
 /* CREATE User */
 router.post('/', function (req, res, next) {
     // TODO: check request data validation
-    var user = User.build({
+    var user = models.User.build({
         userId: req.body.userId,
         password: req.body.password,
         grade: req.body.grade,
@@ -22,7 +22,7 @@ router.post('/', function (req, res, next) {
 router.get('/', function(req, res, next) {
     /* TODO: check request data validation
      and, check if query is valid search param key field */
-    User.findAll({
+    models.User.findAll({
         where: req.query,
         attributes: ['userId', 'name', 'image', 'exp', 'grade', 'status']
     }).then(function (users) {
@@ -35,7 +35,7 @@ router.get('/', function(req, res, next) {
 
 /* READ User one */
 router.get('/:userId', function(req, res, next) {
-    User.findOne({
+    models.User.findOne({
         where: {
             userId: String(req.params.userId)
         }}).then(function (user) {
@@ -58,7 +58,7 @@ router.get('/:userId', function(req, res, next) {
 router.put('/:userId', function(req, res, next) {
     /* TODO: check request data validation
     and, check if query is valid update param key field */
-    User.update(
+    models.User.update(
         req.body,
         {
             where: {
@@ -76,7 +76,7 @@ router.put('/:userId', function(req, res, next) {
 /* DELETE User */
 router.delete('/:userId', function(req, res, next) {
     /* TODO: check request data validation */
-    User.update(
+    models.User.update(
         {
             status: 'dropped'
         },

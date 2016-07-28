@@ -1,13 +1,10 @@
 ﻿var express = require('express');
 var router = express.Router();
-var User = require('../models/UserModel')
-var Favorite = require('../models/FavoriteModel');
-var FavoriteTag = require('../models/FavoriteTagModel');
-var Tag = require('../models/TagModel');
+var models = require('../models');
 
 
 function findTagKey(tagName, callback) {
-    Tag.findOne({
+    models.Tag.findOne({
         where: {
             name: String(tagName)
         }
@@ -20,7 +17,7 @@ function findTagKey(tagName, callback) {
 }
 
 function findUserKey(userID, callback) {
-    User.findOne({
+    models.User.findOne({
         where: {
             userId: String(userID)
         }
@@ -33,7 +30,7 @@ function findUserKey(userID, callback) {
 }
 
 function findTagName(tagKey, callback) {
-    Tag.findOne({
+    models.Tag.findOne({
         where: {
             tagKey: String(tagKey)
         }
@@ -46,7 +43,7 @@ function findTagName(tagKey, callback) {
 }
 
 function findFavoriteKey(userKey, favoriteName, callback) {
-    Favorite.findOne({
+    models.Favorite.findOne({
         where: {
             userKey: String(userKey),
             name : String(favoriteName)
@@ -63,7 +60,7 @@ function findTagsOfKey(favoriteKey, callback){
     var i = 0;
     var tags = [];
     var num;
-    FavoriteTag.findAll({
+    models.FavoriteTag.findAll({
         where:{
             favoriteKey : favoriteKey
         }
@@ -117,7 +114,7 @@ router.post('/', function (req, res, next) {
         }
 
         // 즐찾 테이블 추가
-        Favorite.build({
+        models.Favorite.build({
             userKey : userKey,
             name : favoriteName
         }).save().then(function () {
@@ -128,7 +125,7 @@ router.post('/', function (req, res, next) {
 
         // 즐찾 키 - 태그 키 추가
         for(i = 0; i < tags.length; i++){
-            FavoriteTag.build({
+            models.FavoriteTag.build({
                 favoriteKey: favorite.favoriteKey,
                 tagKey: tagKeys[i]
             }).save(function () {
@@ -147,7 +144,7 @@ router.get('/', function (req, res, next) {
     var favorites = [];
     var temp;
     findUserKey(userID, function (userKey) {
-        Favorite.findAll({
+        models.Favorite.findAll({
             where:{
                 userKey: userKey
             }
@@ -179,7 +176,7 @@ router.put('/', function (req, res, next) {
     var userID = req.body.userID;
     var new_name = req.body.new_name;
     findUserKey(userID, function (userKey) {
-        Favorite.update(
+        models.Favorite.update(
             {
                 name: new_name
             },
@@ -202,7 +199,7 @@ router.delete('/', function(req, res, next) {
     var favoriteKey = req.body.favoriteKey;
     var userID = req.body.userID;
     findUserKey(userID, function (userKey) {
-        Favorite.findOne({
+        models.Favorite.findOne({
             where: {
                 userKey: userKey,
                 favoriteKey: favoriteKey

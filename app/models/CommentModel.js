@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
         freezeTableName: true,
         classMethods: {
             associate: function(models) {
-                Comment.belongsTo(models.User, { foreignKey: 'userKey'});
+                Comment.belongsTo(models.User, { foreignKey: 'userKey' });
                 Comment.belongsTo(models.Posting, { foreignKey: 'postingKey' });
             }
         }
