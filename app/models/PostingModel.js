@@ -9,10 +9,11 @@ module.exports = function(sequelize, DataTypes) {
         tableName: 'posting',
         freezeTableName: true,
         classMethod: {
-            associate: function(models) {
-                Posting.hasMany(models.postingtag, { foreignKey: 'postingKey' });
-            }
+        associate: function(models) {
+            Posting.hasMany(models.comment, { foreignKey: 'postingKey' });
+            Posting.belongsToMany(models.tag, { foreignKey: 'postingKey', through: models.postingtag });
         }
+    }
     });
 
     return Posting;

@@ -8,8 +8,8 @@ module.exports = function(sequelize, DataTypes) {
         freezeTableName: true,
         classMethods: {
             associate: function(models) {
-                Tag.hasMany(models.favoritetag, { foreignKey: 'tagKey' });
-                Tag.hasMany(models.posting, { foreignKey: 'tagKey' });
+                Tag.belongsToMany(models.favorite, { foreignKey: 'tagKey', through : models.favoritetag });
+                Tag.belongsToMany(models.posting, { foreignKey: 'tagKey', through: models.postingtag });
             }
         }
     });

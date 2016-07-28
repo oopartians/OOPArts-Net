@@ -14,6 +14,8 @@ module.exports = function(sequelize, DataTypes) {
         classMethods: {
             associate: function(models) {
                 User.hasMany(models.favorite, { foreignKey: 'userKey' });
+                User.hasMany(models.posting, { foreignKey: 'userKey' });
+                User.hasMany(models.comment, { foreignKey: 'userKey' });
             }
         }
     });
