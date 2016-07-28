@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-var sequelize = require('../config/develop');
+var sequelize = require('../../config/develop');
 
 var Tag = sequelize.define('tag', {
     tagKey: {type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true},

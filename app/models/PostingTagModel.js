@@ -1,5 +1,5 @@
 ﻿var Sequelize = require('sequelize');
-var sequelize = require('../config/develop');
+var sequelize = require('../../config/develop');
 var Tag = require('./TagModel');
 var Posting = require('./PostingModel');
 

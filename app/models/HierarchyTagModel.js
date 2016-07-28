@@ -2,7 +2,7 @@
  * Created by MinHo on 2016-07-06.
  */
 var Sequelize = require('sequelize');
-var sequelize = require('../config/develop');
+var sequelize = require('../../config/develop');
 var Tag = require('./TagModel');
 
 var HierarchyTag = sequelize.define('hierarchytag', {

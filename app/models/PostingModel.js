@@ -1,6 +1,7 @@
 var Sequelize = require('sequelize');
-var sequelize = require('../config/develop');
+var sequelize = require('../../config/develop');
 var user = require('./UserModel');
+var Comment = require('./CommentModel');
 
 var Posting = sequelize.define('posting', {
     postingKey: {
@@ -18,7 +19,10 @@ var Posting = sequelize.define('posting', {
     freezeTableName: true // Model tableName will be the same as the model name
 });
 
-user.hasOne(Posting, { foreignKey : 'userKey', constraints : false });
+// user.hasOne(Posting, { foreignKey : 'userKey', constraints : false });
+// Posting.belongsToMany(Comment, { through: 'PostingComments' });
+Posting.hasMany(Comment, { foreignKey: 'postingKey', constraints: false });
+//Posting.belongsTo(Comment, { foreignKey: 'commentKey', constraints: false });
 
 Posting.sync({force: true});
 

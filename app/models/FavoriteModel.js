@@ -1,5 +1,5 @@
 ﻿var Sequelize = require('sequelize');
-var sequelize = require('../config/develop');
+var sequelize = require('../../config/develop');
 var User = require('./UserModel');
 
 var Favorite = sequelize.define('favorite', {
