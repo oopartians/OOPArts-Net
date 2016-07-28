@@ -13,6 +13,8 @@
     "jade": "~1.11.0",
     "morgan": "~1.6.1",
     "mysql": "^2.10.2",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "sequelize": "^3.23.2",
     "serve-favicon": "~2.3.0"
   }
