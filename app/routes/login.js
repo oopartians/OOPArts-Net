@@ -4,27 +4,27 @@ var models = require('../models');
 var router = express.Router();
 
 router.post('/login', function (req, res, next) {
-    passport.authenticate('local', function (err, user, info) {
-        console.log('1');
-        if (err) {
-            console.log(err);
-            return next(err);
-        }
-        if (!user) {return res.status(200).json({message: 'login fail..'});}
-        req.logIn(user, function (err) {
+    passport.authenticate('local', function(err, user, info) {
+        if (err) { return next(err); }
+        if (!user) { return res.status(401).json({message: 'unauthorized'}); }
+        req.logIn(user, function(err) {
             if (err) { return next(err); }
-            return res.status(200).json({message: 'login success!'});
+            res.status(200).json({message: 'success'});
         });
     })(req, res, next);
 });
 
-router.get('/login', function (req, res, next) {
-    res.status(200).json({message: 'login success!'});
-});
+// router.get('/login', function (req, res, next) {
+//     res.status(200).json({message: 'login success!'});
+// });
 
 router.get('/logout', function (req, res, next) {
     req.logout();
     res.status(200).json({message: 'logout success!'});
 });
 
+module.exports.checkAuthenticated = function (req, res, next) {
+    if (req.isAuthenticated()) { return next(); }
+    res.status(401).json({message: 'unauthorized'});
+};
 module.exports = router;
