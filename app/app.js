@@ -1,4 +1,5 @@
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -6,7 +7,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var SequelizeStore = require('connect-session-sequelize')(session.Store);
 var models = require('./models');
+var sequelize = require('./models/index').sequelize;
+var env = process.env.NODE_ENV || "development";
+var config = require(path.join(__dirname, '..', 'config', 'config.json'))[env];
 
 // Configure the local strategy for use by Passport.
 passport.use(new LocalStrategy({
@@ -67,6 +72,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+    secret: config.session_secret,
+    store: new SequelizeStore({
+        db: sequelize
+    }),
+    proxy: true
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());

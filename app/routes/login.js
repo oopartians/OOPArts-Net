@@ -19,8 +19,12 @@ router.post('/login', function (req, res, next) {
 // });
 
 router.get('/logout', function (req, res, next) {
-    req.logout();
-    res.status(200).json({message: 'logout success!'});
+    if (req.isAuthenticated()) {
+        req.logout();
+        res.status(200).json({message: 'logout success!'});
+    }
+    else
+        res.status(400).json({message: 'fail'});
 });
 
 module.exports.checkAuthenticated = function (req, res, next) {
