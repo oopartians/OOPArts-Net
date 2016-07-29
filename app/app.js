@@ -74,6 +74,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     secret: config.session_secret,
+    saveUninitialized: true,
+    resave: true,
     store: new SequelizeStore({
         db: sequelize
     }),
