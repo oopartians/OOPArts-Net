@@ -59,12 +59,12 @@ var tags = require('./routes/tag');
 var login = require('./routes/login');
 
 var allowCrossDomain = function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', 'ooparts.club');
+    res.header('Access-Control-Allow-Origin', 'http://ooparts.club');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
 
     next();
-}
+};
 
 var app = express();
 
