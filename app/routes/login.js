@@ -9,7 +9,7 @@ router.post('/login', function (req, res, next) {
         if (!user) { return res.status(401).json({message: 'unauthorized'}); }
         req.logIn(user, function(err) {
             if (err) { return next(err); }
-            res.status(200).json({message: 'success'});
+            res.set({"Access-Control-Allow-Origin":"*"}).status(200).json({message: 'success'});
         });
     })(req, res, next);
 });
